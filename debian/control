@@ -10,7 +10,8 @@ Package: xserver-xorg-video-sisusb
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, xserver-xorg-core (>= 2:1.1.1-11)
 Provides: xserver-xorg-video-1.0
-Replaces: xserver-xorg (<< 6.8.2-35)
+Replaces: xserver-xorg (<< 6.8.2-35), xserver-xorg-driver-sisusb
+Conflicts: xserver-xorg-driver-sisusb
 Description: X.Org X server -- SiS USB display driver
  This package provides the driver for SiS USB-attached video devices.
  .
