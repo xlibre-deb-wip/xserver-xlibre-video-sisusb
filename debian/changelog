@@ -7,7 +7,16 @@ xserver-xorg-video-sisusb (1:0.8.1-6) UNRELEASED; urgency=low
   [ Timo Aaltonen ]
   * Replaces/Conflicts: xserver-xorg-driver-sisusb.
 
- -- Timo Aaltonen <tjaalton@cc.hut.fi>  Tue, 24 Apr 2007 14:30:16 +0300
+  [ Brice Goglin ]
+  * Install the upstream changelog.
+  * Bump Build-Depends: xserver-xorg-dev to >= 2:1.2.99.902
+    (needed to let xsfbs get access to serverminver).
+  * Add XS-Vcs-*.
+  * Add a link to www.X.org and a reference to the xf86-video-sisusb
+    module in the long description.
+  * Remove Fabio from uploaders with his permission. He's always welcome back.
+
+ -- Brice Goglin <Brice.Goglin@ens-lyon.org>  Tue, 01 May 2007 12:39:16 +0200
 
 xserver-xorg-video-sisusb (1:0.8.1-5) experimental; urgency=low
 
