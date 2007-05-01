@@ -1,5 +1,5 @@
 /* $XFree86$ */
-/* $XdotOrg: driver/xf86-video-sisusb/src/sisusb_driver.h,v 1.8 2005/07/09 03:02:56 twini Exp $ */
+/* $XdotOrg$ */
 /*
  * Global data and definitions
  *
