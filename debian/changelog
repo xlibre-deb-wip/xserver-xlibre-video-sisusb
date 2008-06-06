@@ -6,7 +6,6 @@ xserver-xorg-video-sisusb (1:0.9.0-1) UNRELEASED; urgency=low
   [ Julien Cristau ]
   * New upstream release.
   * Remove Branden from Uploaders with his permission, and add myself.
-  * Build against xserver 1.5 rc1.
   * Bump Standards-Version to 3.7.3.
   * Drop the XS- prefix from Vcs-* control fields.
 
