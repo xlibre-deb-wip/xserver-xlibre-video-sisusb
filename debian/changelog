@@ -1,12 +1,13 @@
-xserver-xorg-video-sisusb (1:0.9.0-3) UNRELEASED; urgency=low
+xserver-xorg-video-sisusb (1:0.9.0-3) experimental; urgency=low
 
   * Pull some upstream commits up to 74c729bc.
   * Build against xserver 1.6 rc1.
   * Allow parallel builds.
   * Run autoreconf on build; add build-deps on automake, libtool and
     xutils-dev.
+  * Add myself to Uploaders.
 
- -- Brice Goglin <bgoglin@debian.org>  Tue, 03 Feb 2009 23:44:13 +0100
+ -- Brice Goglin <bgoglin@debian.org>  Tue, 03 Feb 2009 23:45:12 +0100
 
 xserver-xorg-video-sisusb (1:0.9.0-2) experimental; urgency=low
 
