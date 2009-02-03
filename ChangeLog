@@ -1,3 +1,49 @@
+commit 74c729bc4a94319dd27b927deeaffb807e696bfe
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Fri Jan 30 21:00:47 2009 -0800
+
+    Add README with pointers to mailing list, bugzilla & git repos
+
+commit e9585015180a1c835ef43a99073b74fe9f7a0245
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Fri Jan 9 16:34:14 2009 -0800
+
+    Remove xorgconfig & xorgcfg from See Also list in man page
+
+commit 382f1c431ac0ccdec0e07f18c07efcf44459d2cb
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Tue Aug 19 13:32:34 2008 -0400
+
+    Really compile fix this time I mean it.
+
+commit 39ec8cff7a3bcea4aa87b176e9c8d75af55de6f8
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Tue Aug 19 10:22:21 2008 -0400
+
+    Build fix.
+
+commit a92ba1876d63464e85cea00a6f5e70800465cb41
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Fri Aug 15 14:27:14 2008 -0400
+
+    Build fix.
+
+commit bfb07a5de1c396d8fd9c26da2266c4721ee929b8
+Author: Daniel Stone <daniel@fooishbar.org>
+Date:   Sun Jul 20 04:20:17 2008 +0300
+
+    Remove XFree86-Misc (PassMessage) support
+    
+    HandleMessage/PassMessage from XFree86-Misc was cunningly implemented as
+    just returning BadMatch, given that it's (presumably) been replaced by
+    SISCTRL.  Remove it.
+
+commit 84fd65c57a33a03d494582aceb13356d19a87b82
+Author: Julien Cristau <jcristau@debian.org>
+Date:   Fri Jun 6 12:48:37 2008 +0200
+
+    Add missing include for ioctl()
+
 commit d4b0b8ebba1e8cc2e1b270ff229782ae05b034ac
 Author: Adam Jackson <ajax@redhat.com>
 Date:   Wed Mar 19 15:36:15 2008 -0400
