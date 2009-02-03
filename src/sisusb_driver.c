@@ -43,8 +43,6 @@
 #include "mibank.h"
 #include "mipointer.h"
 #include "mibstore.h"
-#define _XF86MISC_SERVER_
-#include <X11/extensions/xf86misc.h>
 
 #include "sisusb_regs.h"
 #include "sisusb_dac.h"
@@ -482,11 +480,7 @@ SISUSBProbe(DriverPtr drv, int flags)
             pScrn->LeaveVT          = SISUSBLeaveVT;
             pScrn->FreeScreen       = SISUSBFreeScreen;
             pScrn->ValidMode        = SISUSBValidMode;
-#ifdef X_XF86MiscPassMessage
-	    if(xf86GetVersion() >= XF86_VERSION_NUMERIC(4,3,99,2,0)) {
-	       pScrn->HandleMessage = SISUSBHandleMessage;
-            }
-#endif
+
             foundScreen = TRUE;
         }
 
@@ -829,7 +823,7 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
     }
 #endif
 #else
-#if XF86_VERSION_CURRENT >= XF86_VERSION_NUMERIC(4,2,99,0,0)
+#if XF86_VERSION_CURRENT >= XF86_VERSION_NUMERIC(4,2,99,0)
     if(xf86GetVersion() != XF86_VERSION_CURRENT) {
        xf86DrvMsg(pScrn->scrnIndex, X_WARNING,
          "This driver binary is not compiled for this version of " SISUSBMYSERVERNAME "\n");
@@ -2001,7 +1995,7 @@ SISUSBScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
     pSiSUSB->xv_sisdirectunlocked = 0;
 
 #ifdef SIS_GLOBAL_ENABLEXV
-#if (XF86_VERSION_CURRENT >= XF86_VERSION_NUMERIC(4,3,99,0,0)) || (defined(XvExtension))
+#if (XF86_VERSION_CURRENT >= XF86_VERSION_NUMERIC(4,3,99,0)) || (defined(XvExtension))
     if(!pSiSUSB->NoXvideo) {
        SISUSBInitVideo(pScreen);
     }
