@@ -10,7 +10,6 @@ Build-Depends:
  x11proto-video-dev,
  x11proto-xext-dev,
  x11proto-xinerama-dev,
- x11proto-xf86misc-dev,
  x11proto-core-dev,
  x11proto-fonts-dev,
  x11proto-randr-dev,
