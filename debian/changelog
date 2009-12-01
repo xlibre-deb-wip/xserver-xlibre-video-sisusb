@@ -1,6 +1,7 @@
 xserver-xorg-video-sisusb (1:0.9.3-1) UNRELEASED; urgency=low
 
   * New upstream release.
+  * Bump Standards-Version to 3.8.3.
 
  -- Timo Aaltonen <tjaalton@ubuntu.com>  Tue, 01 Dec 2009 10:19:52 +0200
 
