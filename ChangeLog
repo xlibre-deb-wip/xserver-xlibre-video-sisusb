@@ -1,3 +1,38 @@
+commit a18b2e7643188c5b0a900680792d413ca0e9941e
+Author: Dave Airlie <airlied@redhat.com>
+Date:   Thu Jul 30 12:04:29 2009 +1000
+
+    sisusb: bump for release 0.9.3
+
+commit cf32d0b9a37137b26f2c89578b53197ba27b22a9
+Author: Dave Airlie <airlied@redhat.com>
+Date:   Tue Jul 28 13:32:37 2009 +1000
+
+    sisusb: update for resources/RAC API removal
+
+commit 35789a14c0074bb5994deb890e0f3832f1d4a067
+Author: Peter Hutterer <peter.hutterer@who-t.net>
+Date:   Thu Jul 16 11:55:36 2009 +1000
+
+    Update to xextproto 7.1 support.
+    
+    DPMS header was split into dpms.h (client) and dpmsconst.h (server). Drivers
+    need to include dpmsconst.h if xextproto 7.1 is available.
+    
+    Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+
+commit 89ca2b91468b13db7dda7984675013a6180feb97
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Thu Jul 2 11:46:26 2009 -0400
+
+    sisusb 0.9.2
+
+commit d6b8211d924ac41d878be707b79e585334d77347
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Thu May 28 15:20:00 2009 -0400
+
+    Remove useless loader symbol lists.
+
 commit 153b489ad561134ebdef6c4025f3b7ae5d873065
 Author: Adam Jackson <ajax@redhat.com>
 Date:   Tue Feb 24 10:22:50 2009 -0500
