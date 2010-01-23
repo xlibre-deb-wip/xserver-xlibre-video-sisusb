@@ -1,16 +1,22 @@
-xserver-xorg-video-sisusb (1:0.9.3-1) UNRELEASED; urgency=low
+xserver-xorg-video-sisusb (1:0.9.3-2) UNRELEASED; urgency=low
+
+  * Rename the build directory to not include DEB_BUILD_GNU_TYPE for no
+    good reason.  Thanks, Colin Watson!
+  * Remove myself from Uploaders
+
+ -- Julien Cristau <jcristau@debian.org>  Sat, 23 Jan 2010 02:06:44 +0100
+
+xserver-xorg-video-sisusb (1:0.9.3-1) experimental; urgency=low
 
   [ Timo Aaltonen ]
   * New upstream release.
   * Bump Standards-Version to 3.8.3.
   * Build against Xserver 1.7.
 
-  [ Julien Cristau ]
-  * Rename the build directory to not include DEB_BUILD_GNU_TYPE for no
-    good reason.  Thanks, Colin Watson!
-  * Remove myself from Uploaders
+  [ Cyril Brulebois ]
+  * Upload to experimental.
 
- -- Timo Aaltonen <tjaalton@ubuntu.com>  Sat, 05 Dec 2009 01:49:11 +0200
+ -- Cyril Brulebois <kibi@debian.org>  Sun, 06 Dec 2009 01:30:39 +0100
 
 xserver-xorg-video-sisusb (1:0.9.1-1) unstable; urgency=low
 
