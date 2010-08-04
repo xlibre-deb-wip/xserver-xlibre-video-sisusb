@@ -1,3 +1,11 @@
+xserver-xorg-video-sisusb (1:0.9.4-1) UNRELEASED; urgency=low
+
+  * New upstream version
+    - Fixes build against Xserver 1.9
+  * Bump Standards-Version to 3.9.1 (no changes needed)
+
+ -- Christopher James Halse Rogers <raof@ubuntu.com>  Wed, 04 Aug 2010 11:29:24 +1000
+
 xserver-xorg-video-sisusb (1:0.9.3-2) unstable; urgency=low
 
   [ Julien Cristau ]
