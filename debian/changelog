@@ -5,6 +5,7 @@ xserver-xorg-video-sisusb (1:0.9.4-2) UNRELEASED; urgency=low
     - Use dh-autoreconf.
     - Bump xserver-xorg-dev build-dep for dh_xsf_substvars and xsf
       debhelper sequence.
+  * Remove xsfbs accordingly.
 
  -- Cyril Brulebois <kibi@debian.org>  Fri, 04 Feb 2011 06:01:22 +0100
 
