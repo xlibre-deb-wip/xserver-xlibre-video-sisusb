@@ -113,6 +113,14 @@
 #include <X11/extensions/Xv.h>
 #endif
 
+#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
+#define _swapl(x, n) swapl(x,n)
+#define _swaps(x, n) swaps(x,n)
+#else
+#define _swapl(x, n) swapl(x)
+#define _swaps(x, n) swaps(x)
+#endif
+
 /* Platform/architecture related definitions: */
 
 #undef SIS_PC_PLATFORM
@@ -141,7 +149,6 @@
 #define UNLOCK_ALWAYS		/* Always unlock the registers (should be set!) */
 
 /* Need that for SiSCtrl */
-#define NEED_REPLIES		/* ? */
 #define EXTENSION_PROC_ARGS void *
 #include "extnsionst.h" 			/* required */
 #include <X11/extensions/panoramiXproto.h>	/* required */
@@ -732,7 +739,7 @@ typedef struct {
     Bool		skipswitchcheck;
     ULong		VBFlagsInit;
     DisplayModePtr	currentModeLast;
-    IOADDRESS		MyPIOOffset;
+    unsigned long		MyPIOOffset;
 
     char		messagebuffer[64];
     unsigned int	VGAMapSize;		/* SiSVGA stuff */

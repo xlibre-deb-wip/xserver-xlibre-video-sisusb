@@ -51,6 +51,8 @@
 #ifndef _VGATYPES_
 #define _VGATYPES_
 
+#include <xf86Pci.h>
+
 #ifndef FALSE
 #define FALSE   0
 #endif
@@ -93,7 +95,7 @@ typedef unsigned char BOOLEAN;
 
 #define SISIOMEMTYPE
 
-typedef IOADDRESS SISIOADDRESS;
+typedef unsigned long SISIOADDRESS;
 
 typedef enum _SIS_CHIP_TYPE {
     SIS_VGALegacy = 0,
