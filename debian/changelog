@@ -1,9 +1,9 @@
-xserver-xorg-video-sisusb (1:0.9.4-3) UNRELEASED; urgency=low
+xserver-xorg-video-sisusb (1:0.9.4-3) unstable; urgency=low
 
   * Merge from upstream master branch up to 02451944ba to fix the
     FTBFS against X server 1.12.
 
- -- Cyril Brulebois <kibi@debian.org>  Tue, 01 May 2012 19:30:20 +0200
+ -- Cyril Brulebois <kibi@debian.org>  Tue, 01 May 2012 19:32:48 +0200
 
 xserver-xorg-video-sisusb (1:0.9.4-2) unstable; urgency=low
 
