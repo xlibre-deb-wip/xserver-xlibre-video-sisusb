@@ -86,7 +86,7 @@
 #include "xf86.h"
 #include "xf86Cursor.h"
 #include "xf86cmap.h"
-#include "xaa.h"
+#include "xf86fbman.h"
 
 #define SISUSB_HaveDriverFuncs 0
 
@@ -112,6 +112,10 @@
 #include "xf86xv.h"
 #include <X11/extensions/Xv.h>
 #endif
+
+#include "fb.h"
+
+#include "compat-api.h"
 
 #if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
 #define _swapl(x, n) swapl(x,n)
