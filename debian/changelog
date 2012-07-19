@@ -1,3 +1,9 @@
+xserver-xorg-video-sisusb (1:0.9.6-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+
+ -- Maarten Lankhorst <maarten.lankhorst@canonical.com>  Thu, 19 Jul 2012 13:15:44 +0200
+
 xserver-xorg-video-sisusb (1:0.9.4-3) unstable; urgency=low
 
   * Merge from upstream master branch up to 02451944ba to fix the

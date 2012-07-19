@@ -1,3 +1,247 @@
+commit 894814fe2e54517c3b9a728238542a409bcb783a
+Author: Dave Airlie <airlied@redhat.com>
+Date:   Tue Jul 17 16:05:09 2012 +1000
+
+    xf86-video-sisusb: bump to version 0.9.6
+    
+    Signed-off-by: Dave Airlie <airlied@redhat.com>
+
+commit 1a278211f732a035cf08b4d2d614cb3b8919f89d
+Author: Dave Airlie <airlied@gmail.com>
+Date:   Sun Jul 15 20:01:57 2012 +1000
+
+    sisub: don't require xaa
+    
+    it doesn't use xaa at all.
+    
+    Signed-off-by: Dave Airlie <airlied@redhat.com>
+
+commit a5904352bd7f378cebfe1d4d20966143f656bae3
+Author: Dave Airlie <airlied@gmail.com>
+Date:   Sun Jul 15 20:01:30 2012 +1000
+
+    sisusb: fix build since compat-api
+    
+    Signed-off-by: Dave Airlie <airlied@redhat.com>
+
+commit 414c3ae620f48d31d264b7de0141d5cd4b5a1893
+Author: Dave Airlie <airlied@redhat.com>
+Date:   Mon Jul 2 13:23:21 2012 +0100
+
+    sisusb: bump to 0.9.5 release
+    
+    Signed-off-by: Dave Airlie <airlied@redhat.com>
+
+commit de082dae48030b8a5c1cc2474fe3008170d62eea
+Author: Dave Airlie <airlied@redhat.com>
+Date:   Wed Jun 6 12:28:19 2012 +0100
+
+    sisusb: add support for compat API.
+    
+    Signed-off-by: Dave Airlie <airlied@redhat.com>
+
+commit 02451944ba73887db9803f44a1826059d9105963
+Author: Jeremy Huddleston <jeremyhu@apple.com>
+Date:   Tue Nov 1 23:05:45 2011 -0700
+
+    Build fix for -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast
+    
+    Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
+
+commit 2901c9cf5e842cef199676e76cd0ffa532a76a9b
+Author: Jeremy Huddleston <jeremyhu@apple.com>
+Date:   Tue Nov 1 22:57:33 2011 -0700
+
+    Use unsigned long rather than deprecated IOADDRESS
+    
+    Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
+
+commit 6272e69d8519c43293192b48ff39c8b3a84635d3
+Author: Jeremy Huddleston <jeremyhu@apple.com>
+Date:   Fri Oct 7 12:45:00 2011 -0700
+
+    Fix build failures with recent server changes to swapl and swaps
+    
+    Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
+
+commit dc6d77656d14853b462a8792007e73c5dc07a4b1
+Author: Jeremy Huddleston <jeremyhu@apple.com>
+Date:   Fri Oct 7 12:45:50 2011 -0700
+
+    Also use calloc rather than xcalloc
+    
+    Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
+
+commit 3dc05f643235e78c2b9148c052a6bc45290fb34a
+Author: Jeremy Huddleston <jeremyhu@apple.com>
+Date:   Sat Sep 24 14:02:12 2011 -0700
+
+    Use malloc/free rather than xalloc/xfree
+    
+    Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
+
+commit b2fe8b0fd3b9776577a76d79a9c55ff6643040e6
+Author: Jeremy Huddleston <jeremyhu@apple.com>
+Date:   Sat Sep 24 14:00:29 2011 -0700
+
+    Include xf86Pci.h for IOADDRESS
+    
+    My previous commit incorrectly included pciaccess.h
+    
+    Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
+
+commit 91720979dc7e9fe068fd904dd40900ed1d19e03d
+Author: Jeremy Huddleston <jeremyhu@apple.com>
+Date:   Thu Sep 15 14:45:25 2011 -0700
+
+    Require libpciaccess
+    
+    Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
+
+commit 4968496bdd96d2351ea2aec05feee41b0612140c
+Author: Jeremy Huddleston <jeremyhu@apple.com>
+Date:   Thu Sep 15 14:42:48 2011 -0700
+
+    Add missing include for pciaccess.h
+    
+    Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
+
+commit 241dd519e910d8a07483dc9506ebcbc1fb9c9e0f
+Author: Alan Coopersmith <alan.coopersmith@oracle.com>
+Date:   Sat Jun 4 21:00:03 2011 -0700
+
+    Convert sisusb.man from XORG_RAWCPP to using sed like other drivers
+    
+    Upgrade to util-macros 1.8 for additional man page support
+    
+    Use MAN_SUBST now supplied in XORG_MANPAGE_SECTIONS
+    The value of MAN_SUBST is the same for all X.Org packages.
+    
+    Use AC_PROG_SED now supplied by XORG_DEFAULT_OPTIONS
+    The existing statement can now be removed from the configuration file.
+    
+    Use automake provided $(AM_V_GEN) and XORG_DEFAULT_OPTIONS provided $(SED)
+    Enables silent rule and use platform appropriate version of sed.
+    
+    Signed-off-by: Alan Coopersmith <alan.coopersmith@oracle.com>
+    Reviewed-by: Gaetan Nadon <memsize@videotron.ca>
+
+commit 471636eca6e00de7daddfc7785ca90dba1eb0cb1
+Author: Thierry Vignaud <thierry.vignaud@gmail.com>
+Date:   Fri Dec 3 09:39:58 2010 +0000
+
+    Fix compilation with -Werror=format-security (bug #31540)
+    
+    Not actually a security bug, but shuts gcc up at least.
+    
+    Signed-off-by: Thierry Vignaud <thierry.vignaud@gmail.com>
+    Reviewed-by: Daniel Stone <daniel@fooishbar.org>
+
+commit 8253e3db081656f592461a6960ce71db36b4844e
+Author: Jesse Adkins <jesserayadkins@gmail.com>
+Date:   Tue Sep 28 13:29:51 2010 -0700
+
+    Purge cvs tags.
+    
+    Signed-off-by: Jesse Adkins <jesserayadkins@gmail.com>
+    Signed-off-by: Alan Coopersmith <alan.coopersmith@oracle.com>
+
+commit 0a9d98a6effd599cffff36542c39f97728abb038
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Wed Jul 21 16:49:04 2010 -0400
+
+    config: add comments for main statements
+
+commit 6a97c2386aa6c775018f5acd57b446feab6f438c
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Wed Jul 21 16:07:00 2010 -0400
+
+    config: replace deprecated use of AC_OUTPUT with AC_CONFIG_FILES
+    
+    Signed-off-by: Gaetan Nadon <memsize@videotron.ca>
+
+commit 53b453424f95f79086233f2bc854418b7e77552a
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Wed Jul 21 14:37:41 2010 -0400
+
+    config: replace deprecated AC_HELP_STRING with AS_HELP_STRING
+    
+    Signed-off-by: Gaetan Nadon <memsize@videotron.ca>
+
+commit 2e4b19e73aba988ba58477c4b399484d40f81931
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Wed Jul 21 14:05:23 2010 -0400
+
+    config: replace deprecated AM_CONFIG_HEADER with AC_CONFIG_HEADERS
+    
+    Signed-off-by: Gaetan Nadon <memsize@videotron.ca>
+
+commit 1f89c41d0b3a340db089c56a29ee943d66496a86
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Wed Jul 21 09:27:42 2010 -0400
+
+    config: complete AC_INIT m4 quoting
+    
+    Signed-off-by: Gaetan Nadon <memsize@videotron.ca>
+
+commit f47c5a6436a57c899fc30fa88450ef9c02176b0c
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Tue Jul 20 21:44:58 2010 -0400
+
+    config: remove unrequired AC_SUBST([XORG_CFLAGS])
+    
+    This macro is called by PKG_CHECK_MODULES
+    
+    Signed-off-by: Gaetan Nadon <memsize@videotron.ca>
+
+commit 63ae8222aea5f3e2d9150b2612679c27168e06d9
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Tue Jul 20 20:24:42 2010 -0400
+
+    config: remove unrequired AC_HEADER_STDC
+    
+    Autoconf says:
+    "This macro is obsolescent, as current systems have conforming
+    header files. New programs need not use this macro".
+    
+    Signed-off-by: Gaetan Nadon <memsize@videotron.ca>
+
+commit 6c4fa6e431771e379b782a70a30aeb16eb736e08
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Tue Jul 20 19:41:31 2010 -0400
+
+    config: remove AC_PROG_CC as it overrides AC_PROG_C_C99
+    
+    XORG_STRICT_OPTION from XORG_DEFAULT_OPTIONS calls
+    AC_PROG_C_C99. This sets gcc with -std=gnu99.
+    If AC_PROG_CC macro is called afterwards, it resets CC to gcc.
+    
+    Signed-off-by: Gaetan Nadon <memsize@videotron.ca>
+
+commit 0ef3ef6099ca89380aa49fadea47ceba87aaac24
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Tue Jul 20 18:45:19 2010 -0400
+
+    config: update AC_PREREQ statement to 2.60
+    
+    Unrelated to the previous patches, the new value simply reflects
+    the reality that the minimum level for autoconf to configure
+    all x.org modules is 2.60 dated June 2006.
+    
+    ftp://ftp.gnu.org/gnu/autoconf/autoconf-2.60.tar.gz
+    
+    Signed-off-by: Gaetan Nadon <memsize@videotron.ca>
+
+commit b46fe5c94c68039a748ad8772bc0bf961b3e1c64
+Author: Fernando Carrijo <fcarrijo@yahoo.com.br>
+Date:   Thu Jul 1 07:17:18 2010 -0300
+
+    Purge macros NEED_EVENTS and NEED_REPLIES
+    
+    Signed-off-by: Fernando Carrijo <fcarrijo@yahoo.com.br>
+    Acked-by: Tiago Vignatti <tiago.vignatti@nokia.com>
+    Reviewed-by: Alan Coopersmith <alan.coopersmith@oracle.com>
+
 commit 43eab862e5cf0bfa9e7c8bb570651e94c067c451
 Author: Peter Hutterer <peter.hutterer@who-t.net>
 Date:   Mon Jul 5 15:01:24 2010 +1000
