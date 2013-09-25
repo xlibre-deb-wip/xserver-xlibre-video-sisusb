@@ -1,3 +1,11 @@
+commit 293d0902705c272b83432a955fb6a3c96dd6cea7
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Tue Sep 25 08:54:52 2012 -0400
+
+    Remove mibstore.h
+    
+    Signed-off-by: Adam Jackson <ajax@redhat.com>
+
 commit 894814fe2e54517c3b9a728238542a409bcb783a
 Author: Dave Airlie <airlied@redhat.com>
 Date:   Tue Jul 17 16:05:09 2012 +1000
