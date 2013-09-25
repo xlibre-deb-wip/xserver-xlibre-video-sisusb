@@ -1,3 +1,9 @@
+xserver-xorg-video-sisusb (1:0.9.6-2) unstable; urgency=low
+
+  * Release to unstable.
+
+ -- Maarten Lankhorst <maarten.lankhorst@ubuntu.com>  Wed, 25 Sep 2013 13:07:42 +0200
+
 xserver-xorg-video-sisusb (1:0.9.6-1) experimental; urgency=low
 
   * New upstream release.
