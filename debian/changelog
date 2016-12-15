@@ -1,4 +1,4 @@
-xserver-xorg-video-sisusb (1:0.9.6-3) UNRELEASED; urgency=medium
+xserver-xorg-video-sisusb (1:0.9.6-3) unstable; urgency=medium
 
   [ Andreas Boll ]
   * Cherry-pick commit 6d44eb7 (Adapt Block/WakeupHandler signature for
