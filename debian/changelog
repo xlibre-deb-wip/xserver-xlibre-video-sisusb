@@ -2,6 +2,7 @@ xserver-xorg-video-sisusb (1:0.9.6-3) UNRELEASED; urgency=medium
 
   * Cherry-pick commit 6d44eb7 (Adapt Block/WakeupHandler signature for
     ABI 23) from upstream master branch (Closes: #846698).
+  * Bump debhelper compat to 10.
 
  -- Andreas Boll <andreas.boll.dev@gmail.com>  Thu, 15 Dec 2016 17:30:12 +0100
 
