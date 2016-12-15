@@ -15,7 +15,7 @@ Build-Depends:
  x11proto-randr-dev,
  x11proto-render-dev,
  xutils-dev
-Standards-Version: 3.9.3
+Standards-Version: 3.9.8
 Vcs-Git: https://anonscm.debian.org/git/pkg-xorg/driver/xserver-xorg-video-sisusb.git
 Vcs-Browser: https://anonscm.debian.org/git/pkg-xorg/driver/xserver-xorg-video-sisusb.git
 

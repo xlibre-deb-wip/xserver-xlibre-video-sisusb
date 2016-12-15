@@ -5,6 +5,7 @@ xserver-xorg-video-sisusb (1:0.9.6-3) UNRELEASED; urgency=medium
   * Bump debhelper compat to 10.
   * Switch URLs to https.
   * Remove Cyril from Uploaders.
+  * Bump Standards-Version to 3.9.8.
 
  -- Andreas Boll <andreas.boll.dev@gmail.com>  Thu, 15 Dec 2016 17:30:12 +0100
 
