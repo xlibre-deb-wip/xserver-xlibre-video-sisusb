@@ -1,3 +1,19 @@
+commit fceb6ca43badf8ddb2fbfd7fb00648383a0a35e1
+Author: Matt Turner <mattst88@gmail.com>
+Date:   Tue Jan 17 14:46:23 2017 -0800
+
+    xf86-video-sisusb 0.9.7
+    
+    Signed-off-by: Matt Turner <mattst88@gmail.com>
+
+commit 6d44eb7a6075b9cc359b44282a7095a8b46c8a38
+Author: Stefan Dirsch <sndirsch@suse.de>
+Date:   Sat Dec 10 13:07:37 2016 +0100
+
+    Adapt Block/WakeupHandler signature for ABI 23
+    
+    Signed-off-by: Stefan Dirsch <sndirsch@suse.de>
+
 commit 293d0902705c272b83432a955fb6a3c96dd6cea7
 Author: Adam Jackson <ajax@redhat.com>
 Date:   Tue Sep 25 08:54:52 2012 -0400

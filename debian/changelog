@@ -1,3 +1,9 @@
+xserver-xorg-video-sisusb (1:0.9.7-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+
+ -- Andreas Boll <andreas.boll.dev@gmail.com>  Wed, 18 Jan 2017 14:35:59 +0100
+
 xserver-xorg-video-sisusb (1:0.9.6-3) unstable; urgency=medium
 
   [ Andreas Boll ]
