@@ -1,6 +1,7 @@
 xserver-xorg-video-sisusb (1:0.9.7-1) UNRELEASED; urgency=medium
 
   * New upstream release.
+  * Let uscan verify tarball signatures.
 
  -- Andreas Boll <andreas.boll.dev@gmail.com>  Wed, 18 Jan 2017 14:35:59 +0100
 
