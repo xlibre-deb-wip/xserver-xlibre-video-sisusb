@@ -88,49 +88,15 @@
 #include "xf86cmap.h"
 #include "xf86fbman.h"
 
-#define SISUSB_HaveDriverFuncs 0
-
-#ifdef XORG_VERSION_CURRENT
 #include "xorgVersion.h"
 #define SISUSBMYSERVERNAME "X.org"
-#ifndef XF86_VERSION_NUMERIC
-#define XF86_VERSION_NUMERIC(major,minor,patch,snap) \
-	(((major) * 10000000) + ((minor) * 100000) + ((patch) * 1000) + snap)
-#define XF86_VERSION_CURRENT XF86_VERSION_NUMERIC(4,3,99,902)
-#endif
-#ifdef HaveDriverFuncs
-#define SISUSB_HAVE_DRIVER_FUNC
-#undef  SISUSB_HaveDriverFuncs
-#define SISUSB_HaveDriverFuncs HaveDriverFuncs
-#endif
-#else
-#include "xf86Version.h"
-#define SISUSBMYSERVERNAME "XFree86"
-#endif
 
-#if (XF86_VERSION_CURRENT >= XF86_VERSION_NUMERIC(4,3,99,0)) || (defined(XvExtension))
 #include "xf86xv.h"
 #include <X11/extensions/Xv.h>
-#endif
 
 #include "fb.h"
 
 #include "compat-api.h"
-
-#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
-#define _swapl(x, n) swapl(x,n)
-#define _swaps(x, n) swaps(x,n)
-#else
-#define _swapl(x, n) swapl(x)
-#define _swaps(x, n) swaps(x)
-#endif
-
-/* Platform/architecture related definitions: */
-
-#undef SIS_PC_PLATFORM
-#undef SIS_USE_BIOS_SCRATCH
-#undef SIS_NEED_MAP_IOP
-#undef SISUSEDEVPORT
 
 /* Our #includes: Require the arch/platform dependent #defines above */
 
@@ -150,19 +116,12 @@
 
 /* End of configurable stuff --------------------------------- */
 
-#define UNLOCK_ALWAYS		/* Always unlock the registers (should be set!) */
-
 /* Need that for SiSCtrl */
 #define EXTENSION_PROC_ARGS void *
 #include "extnsionst.h" 			/* required */
 #include <X11/extensions/panoramiXproto.h>	/* required */
 
-#undef SISGAMMARAMP
-#ifdef XORG_VERSION_CURRENT
-#if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(6,8,99,13,0) || XORG_VERSION_CURRENT < XORG_VERSION_NUMERIC(4,0,0,0,0)
 #define SISGAMMARAMP		/* Driver can set gamma ramp; requires additional symbols in xf86sym.h */
-#endif
-#endif
 
 #undef SIS_GLOBAL_ENABLEXV
 #if defined(XV_SD_DEPRECATED) || defined(SIS_ENABLEXV)
@@ -754,17 +713,6 @@ typedef struct {
 
     ExtensionEntry	*SiSCtrlExtEntry;
     char		devsectname[32];
-
-    /* accel wrapper */
-#if 0
-    int 		SiSUSBGCIndex;	/* init -1 */
-    CloseScreenProcPtr  AWCloseScreen;
-    CreateGCProcPtr	AWCreateGC;
-    Bool		AccelNeedSync;
-    Bool 		IgnoreRefresh;
-    int			PreAllocSize;
-    void *		PreAllocMem;
-#endif
 } SISUSBRec, *SISUSBPtr;
 
 extern void  sisusbSaveUnlockExtRegisterLock(SISUSBPtr pSiS, UChar *reg1, UChar *reg2);
@@ -775,9 +723,6 @@ extern void  SiSUSBSetup(ScrnInfoPtr pScrn);
 extern void  SISUSBVGAPreInit(ScrnInfoPtr pScrn);
 extern Bool  SiSUSBHWCursorInit(ScreenPtr pScreen);
 extern Bool  SiSUSBAccelInit(ScreenPtr pScreen);
-#if 0
-extern void  SiSUSBSync(ScrnInfoPtr pScrn);
-#endif
 #ifdef SIS_GLOBAL_ENABLEXV
 extern void  SISUSBInitVideo(ScreenPtr pScreen);
 #endif
@@ -812,6 +757,3 @@ extern CARD32 SIS_MMIO_IN32(SISUSBPtr pSiSUSB, UChar *base, unsigned int offset)
 #define SIS_USEIOCTL
 
 #endif  /* _SISUSB_H_ */
-
-
-

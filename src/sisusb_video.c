@@ -61,17 +61,6 @@
  ****************************************************************************/
 
 #ifdef SIS_ENABLEXV
-#if 0
-static CARD32 _sisread(SISUSBPtr pSiSUSB, CARD32 reg)
-{
-    return *(pSiSUSB->IOBase + reg);
-}
-
-static void _siswrite(SISUSBPtr pSiSUSB, CARD32 reg, CARD32 data)
-{
-    *(pSiSUSB->IOBase + reg) = data;
-}
-#endif
 
 static CARD8 getsrreg(SISUSBPtr pSiSUSB, CARD8 reg)
 {
@@ -107,19 +96,6 @@ static CARD8 vblank_active_CRT1(SISUSBPtr pSiSUSB, SISUSBPortPrivPtr pPriv)
 {
     return(inSISREG(pSiSUSB, SISINPSTAT) & 0x08); /* Verified */
 }
-
-/* Scanline - unused */
-#if 0
-static CARD16 get_scanline_CRT1(SISUSBPtr pSiSUSB)
-{
-    CARD32 line;
-
-    _siswrite(pSiSUSB, REG_PRIM_CRT_COUNTER, 0x00000001);
-    line = _sisread(pSiSUSB, REG_PRIM_CRT_COUNTER);
-
-    return((CARD16)((line >> 16) & 0x07FF));
-}
-#endif
 #endif /* SIS_ENABLEXV */
 
 /* Helper: Count attributes */
@@ -275,9 +251,7 @@ SISUSBResetVideo(ScrnInfoPtr pScrn)
     SISUSBPortPrivPtr pPriv = GET_PORT_PRIVATE(pScrn);
 
     /* Unlock registers */
-#ifdef UNLOCK_ALWAYS
     sisusbSaveUnlockExtRegisterLock(pSiSUSB, NULL, NULL);
-#endif
     if(getvideoreg(pSiSUSB, Index_VI_Passwd) != 0xa1) {
         setvideoreg(pSiSUSB, Index_VI_Passwd, 0x86);
         if(getvideoreg(pSiSUSB, Index_VI_Passwd) != 0xa1)
@@ -347,10 +321,7 @@ set_disptype_regs(ScrnInfoPtr pScrn, SISUSBPortPrivPtr pPriv)
 {
     SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
 
-#ifdef UNLOCK_ALWAYS
     sisusbSaveUnlockExtRegisterLock(pSiSUSB, NULL, NULL);
-#endif
-
     setsrregmask(pSiSUSB, 0x06, 0x00, 0xc0);  /* only overlay -> CRT1 */
     setsrregmask(pSiSUSB, 0x32, 0x00, 0xc0);
 }
@@ -434,11 +405,7 @@ SISUSBSetupImageVideo(ScreenPtr pScreen)
     pPriv->is340       = FALSE;
 
     /* gotta uninit this someplace */
-#if defined(REGION_NULL)
     REGION_NULL(pScreen, &pPriv->clip);
-#else
-    REGION_INIT(pScreen, &pPriv->clip, NullBox, 0);
-#endif
 
     pSiSUSB->adaptor = adapt;
 
@@ -559,51 +526,6 @@ SISUSBSetupImageVideo(ScreenPtr pScreen)
 
     return adapt;
 }
-
-#ifdef SIS_ENABLEXV
-#if XF86_VERSION_CURRENT < XF86_VERSION_NUMERIC(4,3,99,3)
-static Bool
-RegionsEqual(RegionPtr A, RegionPtr B)
-{
-    int *dataA, *dataB;
-    int num;
-
-    num = REGION_NUM_RECTS(A);
-    if(num != REGION_NUM_RECTS(B))
-    return FALSE;
-
-    if((A->extents.x1 != B->extents.x1) ||
-       (A->extents.x2 != B->extents.x2) ||
-       (A->extents.y1 != B->extents.y1) ||
-       (A->extents.y2 != B->extents.y2))
-    return FALSE;
-
-    dataA = (int*)REGION_RECTS(A);
-    dataB = (int*)REGION_RECTS(B);
-
-    while(num--) {
-      if((dataA[0] != dataB[0]) || (dataA[1] != dataB[1]))
-        return FALSE;
-      dataA += 2;
-      dataB += 2;
-    }
-
-    return TRUE;
-}
-#endif
-#endif
-
-#if 0
-void
-SISUSBUpdateVideoParms(SISUSBPtr pSiSUSB, SISUSBPortPrivPtr pPriv)
-{
-  set_allowswitchcrt(pSiSUSB, pPriv);
-#ifdef SIS_ENABLEXV
-  set_dispmode(pSiSUSB->pScrn, pPriv);
-#endif
-  set_maxencoding(pSiSUSB, pPriv);
-}
-#endif
 
 static int
 SISUSBSetPortAttribute(ScrnInfoPtr pScrn, Atom attribute,
@@ -868,13 +790,6 @@ calc_scale_factor(SISUSBOverlayPtr pOverlay, ScrnInfoPtr pScrn,
 	   pOverlay->pitch /= mult;
 	}
      } else {
-#if 0
-        if(((pOverlay->bobEnable & 0x08) == 0x00) &&
-           (((srcPitch * I) >> 2) > 0xFFF)){
-           pOverlay->bobEnable |= 0x08;
-           srcPitch >>= 1;
-        }
-#endif
         if(((srcPitch * I) >> 2) > 0xFFF) {
            I = (0xFFF * 2 / srcPitch);
            pOverlay->VUSF = 0xFFFF;
@@ -1222,9 +1137,6 @@ set_overlay(SISUSBPtr pSiSUSB, SISUSBOverlayPtr pOverlay, SISUSBPortPrivPtr pPri
 static void
 close_overlay(SISUSBPtr pSiSUSB, SISUSBPortPrivPtr pPriv)
 {
-#if 0
-  int watchdog;
-#endif
 
   if(!(pPriv->overlayStatus)) return;
   pPriv->overlayStatus = FALSE;
@@ -1232,20 +1144,7 @@ close_overlay(SISUSBPtr pSiSUSB, SISUSBPortPrivPtr pPriv)
   setvideoregmask(pSiSUSB, Index_VI_Control_Misc2, 0x00, 0x05);
   setvideoregmask(pSiSUSB, Index_VI_Control_Misc1, 0x00, 0x01);
 
-#if 0
-  watchdog = WATCHDOG_DELAY;
-  while((!vblank_active_CRT1(pSiSUSB, pPriv)) && --watchdog);
-  watchdog = WATCHDOG_DELAY;
-  while(vblank_active_CRT1(pSiSUSB, pPriv) && --watchdog);
-#endif
   setvideoregmask(pSiSUSB, Index_VI_Control_Misc0, 0x00, 0x02);
-#if 0
-  watchdog = WATCHDOG_DELAY;
-  while((!vblank_active_CRT1(pSiSUSB, pPriv)) && --watchdog);
-  watchdog = WATCHDOG_DELAY;
-  while(vblank_active_CRT1(pSiSUSB, pPriv) && --watchdog);
-#endif
-
 }
 #endif
 
@@ -1654,11 +1553,7 @@ SISUSBPutImage(
    /* update cliplist */
    if(pPriv->autopaintColorKey &&
       (pPriv->grabbedByV4L ||
-#if XF86_VERSION_CURRENT < XF86_VERSION_NUMERIC(4,3,99,3)
-       (!RegionsEqual(&pPriv->clip, clipBoxes)) ||
-#else
        (!REGION_EQUAL(pScrn->pScreen, &pPriv->clip, clipBoxes)) ||
-#endif
        (pPriv->PrevOverlay != pPriv->NoOverlay))) {
       /* We always paint the colorkey for V4L */
       if(!pPriv->grabbedByV4L) {

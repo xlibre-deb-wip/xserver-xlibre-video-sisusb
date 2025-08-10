@@ -69,21 +69,15 @@ static int pix24bpp = 0;
  * an upper-case version of the driver name.
  */
 
-#ifdef _X_EXPORT
-_X_EXPORT
-#endif
-DriverRec SISUSB = {
+_X_EXPORT DriverRec SISUSB = {
     SISUSB_CURRENT_VERSION,
     SISUSB_DRIVER_NAME,
     SISUSBIdentify,
     SISUSBProbe,
     SISUSBAvailableOptions,
     NULL,
-    0
-#ifdef SISUSB_HAVE_DRIVER_FUNC
-     ,
+    0,
     SISUSBDriverFunc
-#endif
 };
 
 static SymTabRec SISUSBChipsets[] = {
@@ -101,11 +95,7 @@ static XF86ModuleVersionInfo sisVersRec =
     MODULEVENDORSTRING,
     MODINFOSTRING1,
     MODINFOSTRING2,
-#ifdef XORG_VERSION_CURRENT
     XORG_VERSION_CURRENT,
-#else
-    XF86_VERSION_CURRENT,
-#endif
     SISUSB_MAJOR_VERSION, SISUSB_MINOR_VERSION, SISUSB_PATCHLEVEL,
     ABI_CLASS_VIDEODRV,         /* This is a video driver */
     ABI_VIDEODRV_VERSION,
@@ -113,10 +103,7 @@ static XF86ModuleVersionInfo sisVersRec =
     {0,0,0,0}
 };
 
-#ifdef _X_EXPORT
-_X_EXPORT
-#endif
-XF86ModuleData sisusbModuleData = { &sisVersRec, sisusbSetup, NULL };
+_X_EXPORT XF86ModuleData sisusbModuleData = { &sisVersRec, sisusbSetup, NULL };
 
 pointer
 sisusbSetup(pointer module, pointer opts, int *errmaj, int *errmin)
@@ -125,7 +112,7 @@ sisusbSetup(pointer module, pointer opts, int *errmaj, int *errmin)
 
     if(!setupDone) {
        setupDone = TRUE;
-       xf86AddDriver(&SISUSB, module, SISUSB_HaveDriverFuncs);
+       xf86AddDriver(&SISUSB, module, HaveDriverFuncs);
        return (pointer)TRUE;
     }
 
@@ -142,7 +129,6 @@ SISUSBIdentify(int flags)
     xf86PrintChipsets(SISUSB_NAME, "driver for SiSUSB chipsets", SISUSBChipsets);
 }
 
-#ifdef SISUSB_HAVE_DRIVER_FUNC
 static Bool
 SISUSBDriverFunc(ScrnInfoPtr pScrn, xorgDriverFuncOp op, pointer ptr)
 {
@@ -157,7 +143,6 @@ SISUSBDriverFunc(ScrnInfoPtr pScrn, xorgDriverFuncOp op, pointer ptr)
 	return FALSE;
     }
 }
-#endif
 
 static Bool
 SISUSBGetRec(ScrnInfoPtr pScrn)
@@ -168,7 +153,7 @@ SISUSBGetRec(ScrnInfoPtr pScrn)
      */
     if(pScrn->driverPrivate != NULL) return TRUE;
 
-    pScrn->driverPrivate = xnfcalloc(sizeof(SISUSBRec), 1);
+    pScrn->driverPrivate = XNFcallocarray(sizeof(SISUSBRec), 1);
 
     /* Initialise it to 0 */
     memset(pScrn->driverPrivate, 0, sizeof(SISUSBRec));
@@ -208,22 +193,10 @@ SISUSBFreeRec(ScrnInfoPtr pScrn)
     }
 }
 
-static void
-SISUSBErrorLog(ScrnInfoPtr pScrn, const char *format, ...)
-{
-    va_list ap;
-    static const char *str = "**************************************************\n";
+#define MSG_DELIM "**************************************************\n"
 
-    va_start(ap, format);
-    xf86DrvMsg(pScrn->scrnIndex, X_ERROR, "%s", str);
-    xf86DrvMsg(pScrn->scrnIndex, X_ERROR,
-    	"                      ERROR:\n");
-    xf86VDrvMsgVerb(pScrn->scrnIndex, X_ERROR, 1, format, ap);
-    va_end(ap);
-    xf86DrvMsg(pScrn->scrnIndex, X_ERROR,
-    	"                  END OF MESSAGE\n");
-    xf86DrvMsg(pScrn->scrnIndex, X_ERROR, "%s", str);
-}
+#define SISUSBErrorLog(pScrn,format,...) \
+    xf86DrvMsgVerb(pScrn->scrnIndex, X_ERROR, 1, format __VA_OPT__(,) __VA_ARGS__)
 
 static int
 SiSUSBFindDuplicate(int myminor, int *minorArray, int numDevSections)
@@ -500,9 +473,7 @@ SISUSBDisplayPowerManagementSet(ScrnInfoPtr pScrn, int PowerManagementMode, int 
     xf86DrvMsgVerb(pScrn->scrnIndex, X_INFO, 4,
           "SISUSBDisplayPowerManagementSet(%d)\n",PowerManagementMode);
 
-#ifdef UNLOCK_ALWAYS
     sisusbSaveUnlockExtRegisterLock(pSiSUSB, NULL, NULL);
-#endif
 
    switch (PowerManagementMode) {
 
@@ -782,13 +753,8 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
         "SiSUSB driver (%d/%02d/%02d-%d, compiled for " SISUSBMYSERVERNAME " %d.%d.%d.%d)\n",
 	SISUSBDRIVERVERSIONYEAR + 2000, SISUSBDRIVERVERSIONMONTH,
 	SISUSBDRIVERVERSIONDAY, SISUSBDRIVERREVISION,
-#ifdef XORG_VERSION_CURRENT
  	XORG_VERSION_MAJOR, XORG_VERSION_MINOR,
 	XORG_VERSION_PATCH, XORG_VERSION_SNAP
-#else
-	XF86_VERSION_MAJOR, XF86_VERSION_MINOR,
-	XF86_VERSION_PATCH, XF86_VERSION_SNAP
-#endif
 	);
     xf86DrvMsg(pScrn->scrnIndex, X_INFO,
 	"Copyright (C) 2001-2005 Thomas Winischhofer <thomas@winischhofer.net>\n");
@@ -796,22 +762,6 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
         "*** See http://www.winischhofer.at/linuxsisusbvga.shtml\n");
     xf86DrvMsg(pScrn->scrnIndex, X_INFO,
 	"*** for documentation and updates.\n");
-
-#ifdef XORG_VERSION_CURRENT
-#if 0  /* no prototype yet */
-    if(xorgGetVersion() != XORG_VERSION_CURRENT) {
-       xf86DrvMsg(pScrn->scrnIndex, X_WARNING,
-         "This driver binary is not compiled for this version of " SISUSBMYSERVERNAME "\n");
-    }
-#endif
-#else
-#if XF86_VERSION_CURRENT >= XF86_VERSION_NUMERIC(4,2,99,0)
-    if(xf86GetVersion() != XF86_VERSION_CURRENT) {
-       xf86DrvMsg(pScrn->scrnIndex, X_WARNING,
-         "This driver binary is not compiled for this version of " SISUSBMYSERVERNAME "\n");
-    }
-#endif
-#endif
 
     /* Allocate the SISUSBRec driverPrivate */
     if(!SISUSBGetRec(pScrn)) {
@@ -980,7 +930,7 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
 
     /* Allocate SiS_Private (for mode switching code) and initialize it */
 
-    if(!(pSiSUSB->SiS_Pr = xnfcalloc(sizeof(SiS_Private), 1))) {
+    if(!(pSiSUSB->SiS_Pr = XNFcallocarray(sizeof(SiS_Private), 1))) {
        SISUSBErrorLog(pScrn, "Could not allocate memory for SiS_Pr structure\n");
        SISUSBFreeRec(pScrn);
        return FALSE;
@@ -1284,7 +1234,7 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
      * Setup the ClockRanges, which describe what clock ranges are available,
      * and what sort of modes they can be used for.
      */
-    clockRanges = xnfcalloc(sizeof(ClockRange), 1);
+    clockRanges = XNFcallocarray(sizeof(ClockRange), 1);
     clockRanges->next = NULL;
     clockRanges->minClock = pSiSUSB->MinClock;
     clockRanges->maxClock = pSiSUSB->MaxClock;
@@ -1556,13 +1506,6 @@ SISUSBRestore(ScrnInfoPtr pScrn)
     SISUSBRegPtr sisReg = &pSiSUSB->SavedReg;
     int	         flags;
 
-#if 0
-    /* Wait for the accelerators */
-    if(!pSiSUSB->NoAccel) {
-       SiSUSBSync(pScrn);
-    }
-#endif
-
     /* Clear video RAM if sisusbfb not active */
     if(!pSiSUSB->sisfbfound && !pSiSUSB->sisusbfbactive) {
        sisclearvram(pSiSUSB, pSiSUSB->FbBase, pSiSUSB->maxxfbmem);
@@ -1573,9 +1516,7 @@ SISUSBRestore(ScrnInfoPtr pScrn)
 
     SiSUSBVGAProtect(pScrn, TRUE);
 
-#ifdef UNLOCK_ALWAYS
     sisusbSaveUnlockExtRegisterLock(pSiSUSB, NULL,NULL);
-#endif
 
     /* First, restore CRT1 on/off and VB connection registers */
     outSISIDXREG(pSiSUSB,SISCR, 0x32, pSiSUSB->oldCR32);
@@ -1638,7 +1579,6 @@ SISUSBBridgeRestore(ScrnInfoPtr pScrn)
 static void
 SISUSBBlockHandler(BLOCKHANDLER_ARGS_DECL)
 {
-    SCREEN_PTR(arg);
     ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
 
@@ -1649,7 +1589,7 @@ SISUSBBlockHandler(BLOCKHANDLER_ARGS_DECL)
 	     pSiSUSB->sisusberrorsleepcount = 0;
 	     pSiSUSB->sisusbfatalerror = 0;
 	     pSiSUSB->sisusbdevopen = TRUE;
-	     (*pScrn->SwitchMode)(SWITCH_MODE_ARGS(pScrn, pScrn->currentMode));
+	     (*pScrn->SwitchMode)(pScrn, pScrn->currentMode);
 	     pSiSUSB->ShBoxcount = 1;
 	     pSiSUSB->ShXmin = pSiSUSB->ShYmin = 0;
 	     pSiSUSB->ShXmax = pScrn->virtualX;
@@ -1684,7 +1624,7 @@ SISUSBBlockHandler(BLOCKHANDLER_ARGS_DECL)
  * depth, bitsPerPixel)
  */
 static Bool
-SISUSBScreenInit(SCREEN_INIT_ARGS_DECL)
+SISUSBScreenInit(ScreenPtr pScreen, int argc, char **argv)
 {
     ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
@@ -1702,9 +1642,7 @@ SISUSBScreenInit(SCREEN_INIT_ARGS_DECL)
 
     SiSUSB_SiSFB_Lock(pScrn, TRUE);
 
-#ifdef UNLOCK_ALWAYS
     sisusbSaveUnlockExtRegisterLock(pSiSUSB, NULL, NULL);
-#endif
 
     /* Save the current state */
     SISUSBSave(pScrn);
@@ -1782,7 +1720,7 @@ SISUSBScreenInit(SCREEN_INIT_ARGS_DECL)
     SISUSBSaveScreen(pScreen, SCREEN_SAVER_ON);
 
     /* Set the viewport */
-    SISUSBAdjustFrame(ADJUST_FRAME_ARGS(pScrn, pScrn->frameX0, pScrn->frameY0));
+    SISUSBAdjustFrame(pScrn, pScrn->frameX0, pScrn->frameY0);
 
     /* Reset visual list. */
     miClearVisualTypes();
@@ -1944,18 +1882,7 @@ SISUSBScreenInit(SCREEN_INIT_ARGS_DECL)
     pSiSUSB->delaycount = 0;
     if(pSiSUSB->ShadowFB) {
        ShadowFBInit(pScreen, SISUSBRefreshArea);
-#if 0
-       if(!pSiSUSB->NoAccel) {
-          if(!SiSUSBFBInit(pScreen)) {
-	     pSiSUSB->NoAccel = TRUE;
-	  }
-       }
-#endif
     }
-
-#if 0
-    xf86DrvMsg(pScrn->scrnIndex, X_INFO, "2D acceleration %sabled\n", pSiSUSB->NoAccel ? "dis":"en");
-#endif
 
     xf86DPMSInit(pScreen, (DPMSSetProcPtr)SISUSBDisplayPowerManagementSet, 0);
 
@@ -1967,11 +1894,9 @@ SISUSBScreenInit(SCREEN_INIT_ARGS_DECL)
     pSiSUSB->xv_sisdirectunlocked = 0;
 
 #ifdef SIS_GLOBAL_ENABLEXV
-#if (XF86_VERSION_CURRENT >= XF86_VERSION_NUMERIC(4,3,99,0)) || (defined(XvExtension))
     if(!pSiSUSB->NoXvideo) {
        SISUSBInitVideo(pScreen);
     }
-#endif
 #endif
 
     /* Wrap some funcs and setup remaining SD flags */
@@ -2041,22 +1966,15 @@ SISUSBScreenInit(SCREEN_INIT_ARGS_DECL)
 
 /* Usually mandatory */
 Bool
-SISUSBSwitchMode(SWITCH_MODE_ARGS_DECL)
+SISUSBSwitchMode(ScrnInfoPtr pScrn, DisplayModePtr mode)
 {
-    SCRN_INFO_PTR(arg);
     SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
 
     if(!pSiSUSB->skipswitchcheck) {
-       if(SISUSBValidMode(arg, mode, TRUE, 0) != MODE_OK) {
+       if(SISUSBValidMode(pScrn, mode, TRUE, 0) != MODE_OK) {
           return FALSE;
        }
     }
-
-#if 0
-    if(!pSiSUSB->NoAccel) {
-       SiSUSBSync(pScrn);
-    }
-#endif
 
     if(!(SISUSBModeInit(pScrn, mode))) return FALSE;
 
@@ -2086,9 +2004,8 @@ SISUSBSetStartAddressCRT1(SISUSBPtr pSiSUSB, ULong base)
  * Usually mandatory
  */
 void
-SISUSBAdjustFrame(ADJUST_FRAME_ARGS_DECL)
+SISUSBAdjustFrame(ScrnInfoPtr pScrn, int x, int y)
 {
-    SCRN_INFO_PTR(arg);
     SISUSBPtr        pSiSUSB = SISUSBPTR(pScrn);
     ULong base;
 
@@ -2114,10 +2031,7 @@ SISUSBAdjustFrame(ADJUST_FRAME_ARGS_DECL)
        }
     }
 
-#ifdef UNLOCK_ALWAYS
     sisusbSaveUnlockExtRegisterLock(pSiSUSB, NULL, NULL);
-#endif
-
     SISUSBSetStartAddressCRT1(pSiSUSB, base);
 }
 
@@ -2127,9 +2041,8 @@ SISUSBAdjustFrame(ADJUST_FRAME_ARGS_DECL)
  * Mandatory!
  */
 static Bool
-SISUSBEnterVT(VT_FUNC_ARGS_DECL)
+SISUSBEnterVT(ScrnInfoPtr pScrn)
 {
-    SCRN_INFO_PTR(arg);
     SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
 
     SiSUSB_SiSFB_Lock(pScrn, TRUE);
@@ -2145,7 +2058,7 @@ SISUSBEnterVT(VT_FUNC_ARGS_DECL)
        return FALSE;
     }
 
-    SISUSBAdjustFrame(ADJUST_FRAME_ARGS(pScrn, pScrn->frameX0, pScrn->frameY0));
+    SISUSBAdjustFrame(pScrn, pScrn->frameX0, pScrn->frameY0);
 
     if(pSiSUSB->ResetXv) {
        (pSiSUSB->ResetXv)(pScrn);
@@ -2160,9 +2073,8 @@ SISUSBEnterVT(VT_FUNC_ARGS_DECL)
  * Mandatory!
  */
 static void
-SISUSBLeaveVT(VT_FUNC_ARGS_DECL)
+SISUSBLeaveVT(ScrnInfoPtr pScrn)
 {
-    SCRN_INFO_PTR(arg);
     SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
 
     if(pSiSUSB->CursorInfoPtr) {
@@ -2194,7 +2106,7 @@ SISUSBLeaveVT(VT_FUNC_ARGS_DECL)
  * Mandatory!
  */
 static Bool
-SISUSBCloseScreen(CLOSE_SCREEN_ARGS_DECL)
+SISUSBCloseScreen(ScreenPtr pScreen)
 {
     ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
@@ -2244,13 +2156,6 @@ SISUSBCloseScreen(CLOSE_SCREEN_ARGS_DECL)
        pSiSUSB->ShadowPtr = NULL;
     }
 
-#if 0
-    if(pSiSUSB->PreAllocMem) {
-       free(pSiSUSB->PreAllocMem);
-       pSiSUSB->PreAllocMem = NULL;
-    }
-#endif
-
     if(pSiSUSB->adaptor) {
        free(pSiSUSB->adaptor);
        pSiSUSB->adaptor = NULL;
@@ -2262,15 +2167,9 @@ SISUSBCloseScreen(CLOSE_SCREEN_ARGS_DECL)
     /* Restore Blockhandler */
     pScreen->BlockHandler = pSiSUSB->BlockHandler;
 
-#if 0
-    if(pSiSUSB->AWCreateGC) {
-       pScreen->CreateGC = pSiSUSB->AWCreateGC;
-    }
-#endif
-
     pScreen->CloseScreen = pSiSUSB->CloseScreen;
 
-    return(*pScreen->CloseScreen)(CLOSE_SCREEN_ARGS);
+    return(*pScreen->CloseScreen)(pScreen);
 }
 
 
@@ -2278,9 +2177,8 @@ SISUSBCloseScreen(CLOSE_SCREEN_ARGS_DECL)
 
 /* Optional */
 static void
-SISUSBFreeScreen(FREE_SCREEN_ARGS_DECL)
+SISUSBFreeScreen(ScrnInfoPtr pScrn)
 {
-    SCRN_INFO_PTR(arg);
     SISUSBFreeRec(pScrn);
 }
 
@@ -2288,9 +2186,8 @@ SISUSBFreeScreen(FREE_SCREEN_ARGS_DECL)
 /* Checks if a mode is suitable for the selected chipset. */
 
 static ModeStatus
-SISUSBValidMode(SCRN_ARG_TYPE arg, DisplayModePtr mode, Bool verbose, int flags)
+SISUSBValidMode(ScrnInfoPtr pScrn, DisplayModePtr mode, Bool verbose, int flags)
 {
-    SCRN_INFO_PTR(arg);
     SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
 
     if(SiSUSB_CheckModeCRT1(pScrn, mode, pSiSUSB->VBFlags, pSiSUSB->HaveCustomModes) < 0x14)
@@ -2386,7 +2283,7 @@ SiSUSBEnableTurboQueue(ScrnInfoPtr pScrn)
 	      /* Disable queue flipping */
 	      inSISIDXREG(pSiSUSB, SISCR, 0x55, tempCR55) ;
     	      andSISIDXREG(pSiSUSB, SISCR, 0x55, 0x33) ;
-	      /* Syncronous reset for Command Queue */
+	      /* Synchronous reset for Command Queue */
 	      outSISIDXREG(pSiSUSB, SISSR, 0x26, 0x01);
 	      SIS_MMIO_OUT32(pSiSUSB, pSiSUSB->IOBase, 0x85c4, 0);
 	      /* Enable VRAM Command Queue mode */
@@ -2413,7 +2310,7 @@ SiSUSBEnableTurboQueue(ScrnInfoPtr pScrn)
 	      /* For MMIO */
 	      /* Set Command Queue Threshold to max value 11111b */
 	      outSISIDXREG(pSiSUSB,SISSR, 0x27, 0x1F);
-	      /* Syncronous reset for Command Queue */
+	      /* Synchronous reset for Command Queue */
 	      outSISIDXREG(pSiSUSB,SISSR, 0x26, 0x01);
 	      /* Do some magic (cp readport to writeport) */
 	      temp = SIS_MMIO_IN32(pSiSUSB, pSiSUSB->IOBase, 0x85C8);
@@ -2466,9 +2363,7 @@ void SiSUSBPreSetMode(ScrnInfoPtr pScrn, DisplayModePtr mode, int viewmode)
        pSiSUSB->IsCustom = TRUE;
     }
 
-#ifdef UNLOCK_ALWAYS
     sisusbSaveUnlockExtRegisterLock(pSiSUSB, NULL, NULL);    /* Unlock Registers */
-#endif
 
     inSISIDXREG(pSiSUSB,SISCR, 0x33, CR33);
 
@@ -2525,9 +2420,7 @@ SiSUSBPostSetMode(ScrnInfoPtr pScrn, SISUSBRegPtr sisReg)
 
     pSiSUSB->CRT1isoff = pSiSUSB->CRT1off;
 
-#ifdef UNLOCK_ALWAYS
     sisusbSaveUnlockExtRegisterLock(pSiSUSB, NULL, NULL);
-#endif
 
     andSISIDXREG(pSiSUSB, SISCR,pSiSUSB->myCR63,0xBF);
     andSISIDXREG(pSiSUSB, SISSR,0x1f,0x3f);
@@ -2692,33 +2585,10 @@ SISUSBSearchCRT1Rate(ScrnInfoPtr pScrn, DisplayModePtr mode)
    else          return defindex;
 }
 
-#if 0
-static int
-SISUSBGetScanline(SISUSBPtr pSiSUSB)
-{
-   SIS_MMIO_OUT32(pSiSUSB, pSiSUSB->IOBase,0x8514,0x00000001);
-   return(((SIS_MMIO_IN32(pSiSUSB, pSiSUSB->IOBase,0x8514)) >> 16) & 0x7ff);
-#if 0
-   inSISIDXREG(pSiSUSB,SISCR,0x20,reg1);
-   inSISIDXREG(pSiSUSB,SISCR,0x1c,reg2);
-   inSISIDXREG(pSiSUSB,SISCR,0x1d,reg3);
-   return (reg2 | ((reg3 & 0x07) << 8));
-#endif
-}
-#endif
-
 void
 SISUSBWaitRetraceCRT1(ScrnInfoPtr pScrn)
 {
    usleep(10000);
-#if 0
-   SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
-   int line1, line2;
-   UChar  temp;
-
-   inSISIDXREG(pSiSUSB,SISSR,0x1f,temp);
-   if(temp & 0xc0) return;
-#endif
 }
 
 static void
@@ -2773,8 +2643,6 @@ void
 sisusbRestoreExtRegisterLock(SISUSBPtr pSiSUSB, UChar reg1, UChar reg2)
 {
     /* restore lock */
-#ifndef UNLOCK_ALWAYS
     outSISIDXREG(pSiSUSB, SISSR, 0x05, reg1 == 0xA1 ? 0x86 : 0x00);
-#endif
 }
 
