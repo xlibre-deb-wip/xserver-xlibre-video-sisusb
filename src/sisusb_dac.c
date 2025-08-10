@@ -295,9 +295,7 @@ SiSUSBSave(ScrnInfoPtr pScrn, SISUSBRegPtr sisReg)
     SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
     int i;
 
-#ifdef UNLOCK_ALWAYS
     sisusbSaveUnlockExtRegisterLock(pSiSUSB, NULL, NULL);
-#endif
 
     /* Save SR registers */
     for(i = 0x00; i <= 0x3F; i++) {
@@ -348,9 +346,7 @@ SiSUSBRestore(ScrnInfoPtr pScrn, SISUSBRegPtr sisReg)
     SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
     int i,temp;
 
-#ifdef UNLOCK_ALWAYS
     sisusbSaveUnlockExtRegisterLock(pSiSUSB, NULL, NULL);
-#endif
 
     /* Wait for accelerator to finish on-going drawing operations. */
     inSISIDXREG(pSiSUSB, SISSR, 0x1E, temp);
@@ -427,9 +423,7 @@ SiSUSBRestoreBridge(ScrnInfoPtr pScrn, SISUSBRegPtr sisReg)
    SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
    int i;
 
-#ifdef UNLOCK_ALWAYS
    sisusbSaveUnlockExtRegisterLock(pSiSUSB, NULL, NULL);
-#endif
 
    for(i = 0x30; i <= 0x3b; i++) {
       if(i == 0x34) continue;
@@ -503,7 +497,7 @@ int SiSUSBMemBandWidth(ScrnInfoPtr pScrn, Bool IsForCRT2)
 /* Load the palette. We do this for all supported color depths
  * in order to support gamma correction. We hereby convert the
  * given colormap to a complete 24bit color palette and enable
- * the correspoding bit in SR7 to enable the 24bit lookup table.
+ * the corresponding bit in SR7 to enable the 24bit lookup table.
  * Gamma correction for CRT2 is only supported on SiS video bridges.
  * There are there 6-bit-RGB values submitted even if bpp is 16 and
  * weight is 565, because SetWeight() sets rgbBits to the maximum
