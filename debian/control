@@ -27,7 +27,7 @@ Depends:
  ${misc:Depends},
  ${xviddriver:Depends},
 Provides:
- xserver-xorg-video-sisusb,
+ xserver-xorg-video-sisusb (= ${binary:Version}),
  ${xviddriver:Provides}
 Description: XLibre X server -- SiS USB display driver
  This package provides the driver for SiS USB-attached video devices.
