@@ -1,3 +1,10 @@
+xserver-xlibre-video-sisusb (1:0.9.7.1-2) unstable; urgency=medium
+
+  * debian/control: Pin versions in Provides fields
+  * debian/gbp.conf: Use DEP-14 style branches
+
+ -- apebl <a@pebl.cc>  Mon, 18 Aug 2025 07:13:05 +0000
+
 xserver-xlibre-video-sisusb (1:0.9.7.1-1) unstable; urgency=low
 
   * Initial release.
